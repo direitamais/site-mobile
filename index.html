@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <!-- scripts/dev-local.sh (porta 8080): o debug do Flutter web (hot
+       reload) só conecta por 127.0.0.1; "localhost" travaria no
+       carregador. Restrito a essa porta — outras prévias locais (ex.
+       localhost:8765) já funcionam e estão na lista de redirecionamento
+       do id-login; redirecionar o host delas quebraria a recuperação de
+       senha por ID, que não aceita 127.0.0.1:8765 como destino. -->
+  <!-- Clickjacking: outro site poderia carregar o app num iframe invisível,
+       com a sessão de quem está logado, e induzir um clique em "excluir
+       conta" ou "enviar". GitHub Pages não envia X-Frame-Options e
+       frame-ancestors não vale em <meta>. Padrão do OWASP (Clickjacking
+       Defense Cheat Sheet): a página nasce escondida e só aparece fora de
+       iframe; num iframe não há nada visível para clicar. -->
+  <style id="fc-antiframe">html { display: none !important; }</style>
+  <script>
+    if (location.hostname === 'localhost' && location.port === '8080') {
+      location.replace(location.href.replace('//localhost', '//127.0.0.1'));
+    }
+    if (window.top === window.self) {
+      document.getElementById('fc-antiframe').remove();
+    } else {
+      try { window.top.location = window.self.location; } catch (_) {}
+    }
+  </script>
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Frente Capital — Mensageiro privado">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Frente Capital">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Frente Capital</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <!-- While the app starts: the same yellow dots as DotsLoader
+       (lib/widgets/dots_loader.dart), lit one after another clockwise. -->
+  <style>
+    html, body { margin: 0; background: #10241A; }
+    #dm-loading {
+      position: fixed; inset: 0; display: flex;
+      align-items: center; justify-content: center; background: #10241A;
+    }
+    #dm-dots circle {
+      transform-box: fill-box; transform-origin: center;
+      animation: dm-dot 0.96s steps(8, end) infinite;
+    }
+    @keyframes dm-dot {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0.15; transform: scale(0.6); }
+    }
+  </style>
+  <div id="dm-loading"><svg id="dm-dots" width="48" height="48" viewBox="0 0 48 48" fill="#E4B84D" aria-hidden="true"><circle cx="24.00" cy="4.80" r="4.80" style="animation-delay:-0.96s"/><circle cx="37.58" cy="10.42" r="4.80" style="animation-delay:-0.84s"/><circle cx="43.20" cy="24.00" r="4.80" style="animation-delay:-0.72s"/><circle cx="37.58" cy="37.58" r="4.80" style="animation-delay:-0.60s"/><circle cx="24.00" cy="43.20" r="4.80" style="animation-delay:-0.48s"/><circle cx="10.42" cy="37.58" r="4.80" style="animation-delay:-0.36s"/><circle cx="4.80" cy="24.00" r="4.80" style="animation-delay:-0.24s"/><circle cx="10.42" cy="10.42" r="4.80" style="animation-delay:-0.12s"/></svg></div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var el = document.getElementById('dm-loading');
+      if (el) el.remove();
+    });
+  </script>
+  <!--
+    You can customize the "flutter_bootstrap.js" script.
+    This is useful to provide a custom configuration to the Flutter loader
+    or to give the user feedback during the initialization process.
+
+    For more details:
+    * https://docs.flutter.dev/platform-integration/web/initialization
+  -->
+  <script src="flutter_bootstrap.js?v=1.0.64%2B65-f06cdc592e07" async></script>
+</body>
+</html>
